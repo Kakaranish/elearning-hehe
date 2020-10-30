@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -44,7 +45,7 @@ namespace ReadNumbers
                         bool isNumber = IsNumber(word);
                         if (isNumber)
                         {
-                            numbers.Add(float.Parse(word));
+                            numbers.Add(float.Parse(word, CultureInfo.InvariantCulture));
                         }
                     }
                 }
