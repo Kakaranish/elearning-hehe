@@ -28,6 +28,13 @@ namespace ReadNumbers
             return regex.IsMatch(str);
         }
 
+        public static List<string> SplitWords(string line)
+        {
+            return line.Split(null)
+                .Where(word => string.IsNullOrWhiteSpace(word) == false)
+                .ToList();
+        }
+
         public static void Main(string[] args)
         {
             string filename = "test.txt";
@@ -41,11 +48,7 @@ namespace ReadNumbers
                     break;
                 }
 
-                List<string> words = line
-                    .Split(null)
-                    .Where(word => string.IsNullOrWhiteSpace(word) == false)
-                    .ToList();
-
+                List<string> words = SplitWords(line);
                 foreach (string word in words)
                 {
                     bool isNumber = IsNumber(word);
