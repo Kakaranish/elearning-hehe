@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,19 +8,6 @@ namespace ReadNumbers
 {
     public class Program
     {
-        //List<string> toCheck = new List<string>
-        //{
-        //    "2"
-        //    "21",
-        //    "21.",
-        //    "21.0",
-        //    "21.1231289321",
-        //    "-21.",
-        //    "+21.",
-        //    "+21",
-        //    "-21"
-        //};
-
         public static bool IsNumber(string str)
         {
             string pattern = @"^(0|([-+]?[1-9]{1}[0-9]*(\.[0-9]*)?))$";
@@ -39,27 +27,33 @@ namespace ReadNumbers
         {
             string filename = "test.txt";
             List<float> numbers = new List<float>();
-            StreamReader streamReader = new StreamReader(filename);
-            while (true)
-            {
-                string line = streamReader.ReadLine();
-                if (line == null)
-                {
-                    break;
-                }
 
-                List<string> words = SplitWords(line);
-                foreach (string word in words)
+            using (StreamReader streamReader = new StreamReader(filename))
+            {
+                while (true)
                 {
-                    bool isNumber = IsNumber(word);
-                    if (isNumber)
+                    string line = streamReader.ReadLine();
+                    if (line == null)
                     {
-                        numbers.Add(float.Parse(word));
+                        break;
+                    }
+
+                    List<string> words = SplitWords(line);
+                    foreach (string word in words)
+                    {
+                        bool isNumber = IsNumber(word);
+                        if (isNumber)
+                        {
+                            numbers.Add(float.Parse(word));
+                        }
                     }
                 }
             }
 
-            streamReader.Dispose();
+            foreach (float number in numbers)
+            {
+                Console.WriteLine(number);
+            }
         }
     }
 }
